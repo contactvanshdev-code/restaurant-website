@@ -9,6 +9,9 @@
   --burnt-amber: #f59e0b;
   --copper: #ea580c;
   --ember-red: #9a3412;
+  --font-display: 'Bodoni Moda', 'Didot', 'Iowan Old Style', 'Times New Roman', serif;
+  --font-body: 'Sora', 'Avenir Next', 'Trebuchet MS', 'Segoe UI', sans-serif;
+  --font-accent: 'Bebas Neue', 'Oswald', 'Franklin Gothic Medium', 'Arial Narrow', sans-serif;
 }
 
 * {
@@ -69,6 +72,16 @@ h6 {
   background: rgba(23, 19, 17, 0.62);
   backdrop-filter: blur(8px);
   border: 1px solid rgba(251, 146, 60, 0.2);
+}
+
+.menu-detail-modal {
+  background: linear-gradient(140deg, rgba(19, 15, 14, 0.97), rgba(26, 20, 18, 0.96));
+  border: 1px solid rgba(251, 146, 60, 0.32);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.5);
+}
+
+.menu-detail-panel {
+  background: linear-gradient(180deg, rgba(14, 11, 10, 0.96), rgba(21, 16, 14, 0.95));
 }
 
 ::-webkit-scrollbar {

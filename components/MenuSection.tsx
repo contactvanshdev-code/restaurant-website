@@ -680,7 +680,7 @@ export default function MenuSection() {
       <AnimatePresence>
         {activeItem ? (
           <motion.div
-            className="fixed inset-0 z-[80] flex items-center justify-center bg-black/78 p-4 backdrop-blur-sm"
+            className="fixed inset-0 z-[80] flex items-center justify-center bg-black/84 p-4 backdrop-blur-sm"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -689,12 +689,12 @@ export default function MenuSection() {
           >
             <motion.article
               layoutId={`plate-${activeItem.id}`}
-              className="glass-charcoal relative w-full max-w-4xl overflow-hidden rounded-3xl"
+              className="menu-detail-modal relative w-full max-w-4xl overflow-hidden rounded-3xl"
               onClick={(event) => event.stopPropagation()}
             >
               <button
                 type="button"
-                className="absolute right-4 top-4 z-10 rounded-full border border-stone-100/20 bg-stone-950/70 px-3 py-1 text-xs uppercase tracking-[0.2em] text-stone-100"
+                className="absolute right-4 top-4 z-10 rounded-full border border-orange-200/35 bg-stone-950/90 px-3 py-1 text-xs uppercase tracking-[0.2em] text-stone-100"
                 onClick={() => setActiveItem(null)}
               >
                 Close
@@ -703,14 +703,14 @@ export default function MenuSection() {
               <div className="grid md:grid-cols-[1.05fr_1fr]">
                 <motion.div layoutId={`plate-image-${activeItem.id}`} className="relative min-h-[260px] md:min-h-[500px]">
                   <Image src={activeItem.image} alt={activeItem.name} fill className="object-cover" sizes="(max-width: 768px) 100vw, 50vw" priority />
-                  <div className="absolute inset-0 bg-gradient-to-t from-stone-950/70 via-transparent to-transparent md:bg-gradient-to-r" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-stone-950/85 via-stone-950/30 to-transparent md:bg-gradient-to-r" />
                 </motion.div>
 
-                <div className="space-y-6 p-6 sm:p-8">
+                <div className="menu-detail-panel space-y-6 p-6 sm:p-8">
                   <div>
                     <p className="font-[var(--font-accent)] text-xs uppercase tracking-[0.3em] text-orange-200/80">Plate Detail</p>
                     <h4 className="mt-2 text-3xl text-stone-50">{activeItem.name}</h4>
-                    <p className="mt-2 text-sm text-stone-300/85">{activeItem.description}</p>
+                    <p className="mt-2 text-sm text-stone-200/95">{activeItem.description}</p>
                   </div>
 
                   <div>
@@ -727,7 +727,7 @@ export default function MenuSection() {
                   <div className="grid gap-4 sm:grid-cols-2">
                     <div>
                       <p className="text-xs uppercase tracking-[0.2em] text-orange-100/80">Allergens</p>
-                      <p className="mt-2 text-sm text-stone-200/85">{activeItem.allergens.join(' • ')}</p>
+                      <p className="mt-2 text-sm text-stone-200/95">{activeItem.allergens.join(' • ')}</p>
                     </div>
                     <div>
                       <p className="text-xs uppercase tracking-[0.2em] text-orange-100/80">Price</p>
