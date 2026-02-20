@@ -2,7 +2,7 @@
 
 import { AnimatePresence, motion } from 'framer-motion';
 import Image from 'next/image';
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 type MenuCategory = 'earth' | 'fire' | 'sea' | 'hearth' | 'sweet' | 'cellar';
 type DietaryFilter = 'all' | 'veg' | 'vegan' | 'gf' | 'signature';
@@ -524,6 +524,25 @@ export default function MenuSection() {
   const [query, setQuery] = useState('');
   const [activeItem, setActiveItem] = useState<MenuItem | null>(null);
 
+  useEffect(() => {
+    if (!activeItem) return;
+
+    const previousOverflow = document.body.style.overflow;
+    const onEscape = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        setActiveItem(null);
+      }
+    };
+
+    document.body.style.overflow = 'hidden';
+    window.addEventListener('keydown', onEscape);
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener('keydown', onEscape);
+    };
+  }, [activeItem]);
+
   const categoryCount = useMemo(() => {
     return CATEGORIES.reduce<Record<MenuCategory, number>>((acc, category) => {
       acc[category.id] = MENU_ITEMS.filter((item) => item.category === category.id).length;
@@ -563,7 +582,7 @@ export default function MenuSection() {
         </div>
 
         <div className="grid gap-4 lg:grid-cols-[0.34fr_1fr]">
-          <aside className="glass-charcoal rounded-3xl p-4 sm:p-5">
+          <aside className="hidden glass-charcoal rounded-3xl p-4 sm:p-5 lg:block">
             <p className="font-[var(--font-accent)] text-xs uppercase tracking-[0.28em] text-orange-100/80">Menu Chapters</p>
             <div className="mt-3 space-y-2">
               {CATEGORIES.map((category) => {
@@ -588,6 +607,33 @@ export default function MenuSection() {
           </aside>
 
           <div className="space-y-5">
+            <div className="glass-charcoal rounded-3xl p-4 lg:hidden">
+              <div className="flex items-center justify-between gap-3">
+                <p className="font-[var(--font-accent)] text-xs uppercase tracking-[0.24em] text-orange-100/80">Menu Chapters</p>
+                <p className="text-[11px] uppercase tracking-[0.16em] text-stone-400">Swipe</p>
+              </div>
+              <div className="mt-3 flex gap-2 overflow-x-auto pb-1">
+                {CATEGORIES.map((category) => {
+                  const active = category.id === activeCategory;
+                  return (
+                    <button
+                      key={`mobile-${category.id}`}
+                      type="button"
+                      onClick={() => setActiveCategory(category.id)}
+                      className={`shrink-0 rounded-xl border px-3 py-2 text-left transition-all duration-700 ease-cinematic ${
+                        active
+                          ? 'border-orange-300/70 bg-gradient-to-r from-orange-500/30 to-amber-400/25 text-amber-50'
+                          : 'border-stone-100/15 bg-stone-900/35 text-stone-300'
+                      }`}
+                    >
+                      <p className="text-[11px] uppercase tracking-[0.16em]">{category.label}</p>
+                      <p className="mt-1 text-[10px] text-stone-300/80">{categoryCount[category.id]} dishes</p>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+
             <div className="glass-charcoal rounded-3xl p-4 sm:p-5">
               <div className="flex flex-wrap items-start justify-between gap-4">
                 <div>
@@ -680,7 +726,7 @@ export default function MenuSection() {
       <AnimatePresence>
         {activeItem ? (
           <motion.div
-            className="fixed inset-0 z-[80] flex items-center justify-center bg-black/84 p-4 backdrop-blur-sm"
+            className="fixed inset-0 z-[80] flex items-end justify-center bg-black/84 p-0 backdrop-blur-sm md:items-center md:p-4"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -689,59 +735,82 @@ export default function MenuSection() {
           >
             <motion.article
               layoutId={`plate-${activeItem.id}`}
-              className="menu-detail-modal relative w-full max-w-4xl overflow-hidden rounded-3xl"
+              className="menu-detail-modal relative max-h-[92vh] w-full max-w-4xl overflow-hidden rounded-t-[1.7rem] md:rounded-3xl"
               onClick={(event) => event.stopPropagation()}
+              role="dialog"
+              aria-modal="true"
             >
               <button
                 type="button"
-                className="absolute right-4 top-4 z-10 rounded-full border border-orange-200/35 bg-stone-950/90 px-3 py-1 text-xs uppercase tracking-[0.2em] text-stone-100"
+                className="absolute right-4 top-4 z-20 hidden rounded-full border border-orange-200/45 bg-stone-950/90 px-4 py-2 text-xs uppercase tracking-[0.2em] text-stone-100 md:inline-flex"
                 onClick={() => setActiveItem(null)}
               >
                 Close
               </button>
 
-              <div className="grid md:grid-cols-[1.05fr_1fr]">
-                <motion.div layoutId={`plate-image-${activeItem.id}`} className="relative min-h-[260px] md:min-h-[500px]">
-                  <Image src={activeItem.image} alt={activeItem.name} fill className="object-cover" sizes="(max-width: 768px) 100vw, 50vw" priority />
-                  <div className="absolute inset-0 bg-gradient-to-t from-stone-950/85 via-stone-950/30 to-transparent md:bg-gradient-to-r" />
-                </motion.div>
+              <div className="sticky top-0 z-20 flex items-center justify-between border-b border-stone-100/10 bg-stone-950/95 px-4 py-3 backdrop-blur md:hidden">
+                <p className="font-[var(--font-accent)] text-[11px] uppercase tracking-[0.22em] text-orange-200/80">Plate Detail</p>
+                <button
+                  type="button"
+                  className="rounded-full border border-orange-200/45 bg-orange-500/20 px-4 py-2 text-xs uppercase tracking-[0.18em] text-orange-100"
+                  onClick={() => setActiveItem(null)}
+                >
+                  Close
+                </button>
+              </div>
 
-                <div className="menu-detail-panel space-y-6 p-6 sm:p-8">
-                  <div>
-                    <p className="font-[var(--font-accent)] text-xs uppercase tracking-[0.3em] text-orange-200/80">Plate Detail</p>
-                    <h4 className="mt-2 text-3xl text-stone-50">{activeItem.name}</h4>
-                    <p className="mt-2 text-sm text-stone-200/95">{activeItem.description}</p>
-                  </div>
+              <div className="max-h-[calc(92vh-3.5rem)] overflow-y-auto md:max-h-[92vh]">
+                <div className="grid md:grid-cols-[1.05fr_1fr]">
+                  <motion.div layoutId={`plate-image-${activeItem.id}`} className="relative min-h-[240px] md:min-h-[500px]">
+                    <Image src={activeItem.image} alt={activeItem.name} fill className="object-cover" sizes="(max-width: 768px) 100vw, 50vw" priority />
+                    <div className="absolute inset-0 bg-gradient-to-t from-stone-950/85 via-stone-950/30 to-transparent md:bg-gradient-to-r" />
+                  </motion.div>
 
-                  <div>
-                    <p className="text-xs uppercase tracking-[0.2em] text-orange-100/80">Ingredients</p>
-                    <div className="mt-3 flex flex-wrap gap-2">
-                      {activeItem.ingredients.map((ingredient) => (
-                        <span key={ingredient} className="rounded-full border border-stone-100/20 bg-stone-950/50 px-3 py-1 text-xs text-stone-200">
-                          {ingredient}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-
-                  <div className="grid gap-4 sm:grid-cols-2">
+                  <div className="menu-detail-panel space-y-6 p-6 sm:p-8">
                     <div>
-                      <p className="text-xs uppercase tracking-[0.2em] text-orange-100/80">Allergens</p>
-                      <p className="mt-2 text-sm text-stone-200/95">{activeItem.allergens.join(' • ')}</p>
+                      <p className="font-[var(--font-accent)] text-xs uppercase tracking-[0.3em] text-orange-200/80">Plate Detail</p>
+                      <h4 className="mt-2 text-3xl text-stone-50">{activeItem.name}</h4>
+                      <p className="mt-2 text-sm text-stone-200/95">{activeItem.description}</p>
                     </div>
-                    <div>
-                      <p className="text-xs uppercase tracking-[0.2em] text-orange-100/80">Price</p>
-                      <p className="mt-2 font-[var(--font-accent)] text-2xl tracking-[0.08em] text-orange-200">{activeItem.price}</p>
-                    </div>
-                  </div>
 
-                  <div className="rounded-2xl border border-orange-300/40 bg-gradient-to-r from-orange-500/20 to-amber-400/10 p-4">
-                    <p className="text-xs uppercase tracking-[0.2em] text-orange-100/90">Pairing Recommendation</p>
-                    <p className="mt-2 text-lg text-amber-100">{activeItem.pairing}</p>
+                    <div>
+                      <p className="text-xs uppercase tracking-[0.2em] text-orange-100/80">Ingredients</p>
+                      <div className="mt-3 flex flex-wrap gap-2">
+                        {activeItem.ingredients.map((ingredient) => (
+                          <span key={ingredient} className="rounded-full border border-stone-100/20 bg-stone-950/50 px-3 py-1 text-xs text-stone-200">
+                            {ingredient}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+
+                    <div className="grid gap-4 sm:grid-cols-2">
+                      <div>
+                        <p className="text-xs uppercase tracking-[0.2em] text-orange-100/80">Allergens</p>
+                        <p className="mt-2 text-sm text-stone-200/95">{activeItem.allergens.join(' • ')}</p>
+                      </div>
+                      <div>
+                        <p className="text-xs uppercase tracking-[0.2em] text-orange-100/80">Price</p>
+                        <p className="mt-2 font-[var(--font-accent)] text-2xl tracking-[0.08em] text-orange-200">{activeItem.price}</p>
+                      </div>
+                    </div>
+
+                    <div className="rounded-2xl border border-orange-300/40 bg-gradient-to-r from-orange-500/20 to-amber-400/10 p-4">
+                      <p className="text-xs uppercase tracking-[0.2em] text-orange-100/90">Pairing Recommendation</p>
+                      <p className="mt-2 text-lg text-amber-100">{activeItem.pairing}</p>
+                    </div>
                   </div>
                 </div>
               </div>
             </motion.article>
+
+            <button
+              type="button"
+              className="fixed bottom-4 right-4 z-[90] rounded-full border border-orange-200/50 bg-orange-500/25 px-4 py-2 text-xs uppercase tracking-[0.18em] text-orange-100 md:hidden"
+              onClick={() => setActiveItem(null)}
+            >
+              Close
+            </button>
           </motion.div>
         ) : null}
       </AnimatePresence>

@@ -5,6 +5,7 @@ import MenuSection from '@/components/MenuSection';
 import { AnimatePresence, motion, useMotionValue, useScroll, useSpring, useTransform } from 'framer-motion';
 import Lenis from 'lenis';
 import Image from 'next/image';
+import Link from 'next/link';
 import { useEffect, useMemo, useRef, useState } from 'react';
 
 const ROTATING_WORDS = ['MEMORY', 'PASSION', 'CRAFT'];
@@ -264,6 +265,79 @@ function ReservationSection() {
   );
 }
 
+function CulturePreviewSection() {
+  return (
+    <section className="mx-auto max-w-7xl px-6 py-24 sm:px-8">
+      <div className="mb-12 flex flex-wrap items-end justify-between gap-6">
+        <div>
+          <p className="font-[var(--font-accent)] text-sm uppercase tracking-[0.32em] text-orange-200/80">Beyond the Plate</p>
+          <h2 className="mt-3 text-4xl text-stone-50 sm:text-5xl">Understand the food before you order it.</h2>
+        </div>
+        <p className="max-w-xl text-sm leading-relaxed text-stone-300/85">
+          Explore dedicated pages that explain ingredients, technique, dining rhythm, and the cultural influences that
+          shape each chapter of the menu.
+        </p>
+      </div>
+
+      <div className="grid gap-5 lg:grid-cols-2">
+        <article className="glass-charcoal overflow-hidden rounded-[1.8rem] border border-orange-200/30">
+          <div className="relative h-56">
+            <Image
+              src="https://images.unsplash.com/photo-1515003197210-e0cd71810b5f?auto=format&fit=crop&w=1600&q=80"
+              alt="Chefs preparing dishes in an open kitchen"
+              fill
+              className="object-cover"
+              sizes="(max-width: 1024px) 100vw, 50vw"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-stone-950/90 via-stone-950/45 to-transparent" />
+          </div>
+          <div className="p-6">
+            <p className="font-[var(--font-accent)] text-xs uppercase tracking-[0.26em] text-orange-200/80">Food Guide</p>
+            <h3 className="mt-2 text-2xl text-stone-50">How to read the menu and pair confidently</h3>
+            <p className="mt-3 text-sm leading-relaxed text-stone-300/85">
+              Learn flavor profiles, heat levels, dietary symbols, and pairing logic so ordering feels simple on any
+              device.
+            </p>
+            <Link
+              href="/food-guide"
+              className="mt-5 inline-flex rounded-full border border-orange-300/60 bg-orange-500/20 px-5 py-2 text-xs uppercase tracking-[0.18em] text-orange-100 transition-all duration-700 ease-cinematic hover:bg-orange-500/30"
+            >
+              Open Food Guide
+            </Link>
+          </div>
+        </article>
+
+        <article className="glass-charcoal overflow-hidden rounded-[1.8rem] border border-orange-200/30">
+          <div className="relative h-56">
+            <Image
+              src="https://images.unsplash.com/photo-1466978913421-dad2ebd01d17?auto=format&fit=crop&w=1600&q=80"
+              alt="Shared dishes on a warm communal table"
+              fill
+              className="object-cover"
+              sizes="(max-width: 1024px) 100vw, 50vw"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-stone-950/90 via-stone-950/45 to-transparent" />
+          </div>
+          <div className="p-6">
+            <p className="font-[var(--font-accent)] text-xs uppercase tracking-[0.26em] text-orange-200/80">Food Culture</p>
+            <h3 className="mt-2 text-2xl text-stone-50">The stories, rituals, and people behind the kitchen</h3>
+            <p className="mt-3 text-sm leading-relaxed text-stone-300/85">
+              See how sourcing, seasonality, and service traditions come together to create the Ember & Oak dining
+              culture.
+            </p>
+            <Link
+              href="/culture"
+              className="mt-5 inline-flex rounded-full border border-orange-300/60 bg-orange-500/20 px-5 py-2 text-xs uppercase tracking-[0.18em] text-orange-100 transition-all duration-700 ease-cinematic hover:bg-orange-500/30"
+            >
+              Explore Culture
+            </Link>
+          </div>
+        </article>
+      </div>
+    </section>
+  );
+}
+
 export default function HomePage() {
   const [wordIndex, setWordIndex] = useState(0);
 
@@ -366,6 +440,7 @@ export default function HomePage() {
         </section>
 
         <StorySection />
+        <CulturePreviewSection />
         <ReservationSection />
       </div>
     </main>
