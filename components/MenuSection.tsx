@@ -772,7 +772,7 @@ export default function MenuSection() {
       <AnimatePresence>
         {activeItem ? (
           <motion.div
-            className="fixed inset-0 z-[80] flex items-end justify-center bg-black/84 p-0 backdrop-blur-sm md:items-center md:p-4"
+            className="fixed inset-0 z-[120] flex items-end justify-center bg-black/84 p-0 backdrop-blur-sm md:items-center md:p-4"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -855,6 +855,14 @@ export default function MenuSection() {
                 </div>
               </div>
             </motion.article>
+
+            <button
+              type="button"
+              className="fixed bottom-4 right-4 z-[125] rounded-full border border-orange-200/50 bg-orange-500/30 px-4 py-2 text-xs uppercase tracking-[0.12em] text-orange-100 shadow-ember md:hidden"
+              onClick={() => setActiveItem(null)}
+            >
+              Close
+            </button>
           </motion.div>
         ) : null}
       </AnimatePresence>
