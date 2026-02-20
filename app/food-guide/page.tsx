@@ -62,12 +62,12 @@ const DIETARY_KEYS = [
 
 export default function FoodGuidePage() {
   return (
-    <main className="relative overflow-x-clip bg-charcoal pb-24 pt-28 text-stone-100 sm:pt-32">
+    <main className="relative overflow-x-clip bg-charcoal pb-20 pt-24 text-stone-100 sm:pb-24 sm:pt-32">
       <div className="pointer-events-none fixed inset-0 z-[2] fire-gradient opacity-95" />
 
-      <div className="relative z-10 mx-auto max-w-7xl space-y-12 px-6 sm:px-8">
+      <div className="relative z-10 mx-auto max-w-7xl space-y-8 px-4 sm:space-y-12 sm:px-8">
         <section className="texture-noise overflow-hidden rounded-[2rem] border border-orange-200/30">
-          <div className="relative h-[320px] sm:h-[380px]">
+          <div className="relative h-[280px] sm:h-[380px]">
             <Image
               src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1800&q=80"
               alt="Guests dining in a warm restaurant setting"
@@ -78,8 +78,8 @@ export default function FoodGuidePage() {
             />
             <div className="absolute inset-0 bg-gradient-to-t from-stone-950 via-stone-950/45 to-stone-950/20" />
             <div className="absolute inset-x-0 bottom-0 p-6 sm:p-10">
-              <p className="font-[var(--font-accent)] text-sm uppercase tracking-[0.3em] text-orange-200/80">Food Guide</p>
-              <h1 className="mt-3 max-w-3xl text-4xl leading-tight text-stone-50 sm:text-6xl">
+              <p className="font-[var(--font-accent)] text-sm uppercase tracking-[0.16em] text-orange-200/80 sm:tracking-[0.3em]">Food Guide</p>
+              <h1 className="mt-3 max-w-3xl text-3xl leading-tight text-stone-50 sm:text-6xl">
                 A practical guide to flavor, tags, and pairings.
               </h1>
               <p className="mt-4 max-w-2xl text-sm text-stone-200/90 sm:text-base">
@@ -100,9 +100,9 @@ export default function FoodGuidePage() {
         </section>
 
         <section className="grid gap-6 lg:grid-cols-[1.1fr_0.9fr]">
-          <article className="glass-charcoal rounded-[1.6rem] border border-orange-200/25 p-6 sm:p-8">
-            <p className="font-[var(--font-accent)] text-xs uppercase tracking-[0.26em] text-orange-200/80">Pairing Framework</p>
-            <h2 className="mt-3 text-3xl text-stone-50">Choose drinks in four quick moves</h2>
+          <article className="glass-charcoal rounded-[1.6rem] border border-orange-200/25 p-5 sm:p-8">
+            <p className="font-[var(--font-accent)] text-xs uppercase tracking-[0.14em] text-orange-200/80 sm:tracking-[0.26em]">Pairing Framework</p>
+            <h2 className="mt-3 text-2xl text-stone-50 sm:text-3xl">Choose drinks in four quick moves</h2>
             <div className="mt-6 space-y-4">
               {PAIRING_RULES.map((rule) => (
                 <div key={rule.title} className="rounded-2xl border border-stone-100/15 bg-stone-950/45 p-4">
@@ -113,9 +113,9 @@ export default function FoodGuidePage() {
             </div>
           </article>
 
-          <aside className="glass-charcoal rounded-[1.6rem] border border-orange-200/25 p-6 sm:p-8">
-            <p className="font-[var(--font-accent)] text-xs uppercase tracking-[0.26em] text-orange-200/80">Dietary Legend</p>
-            <h2 className="mt-3 text-3xl text-stone-50">Tag meanings</h2>
+          <aside className="glass-charcoal rounded-[1.6rem] border border-orange-200/25 p-5 sm:p-8">
+            <p className="font-[var(--font-accent)] text-xs uppercase tracking-[0.14em] text-orange-200/80 sm:tracking-[0.26em]">Dietary Legend</p>
+            <h2 className="mt-3 text-2xl text-stone-50 sm:text-3xl">Tag meanings</h2>
             <ul className="mt-6 space-y-3">
               {DIETARY_KEYS.map((keyItem) => (
                 <li key={keyItem.tag} className="rounded-2xl border border-stone-100/15 bg-stone-950/45 p-4">

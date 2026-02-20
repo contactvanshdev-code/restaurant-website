@@ -33,9 +33,9 @@ function MagneticBookButton() {
         x.set(0);
         y.set(0);
       }}
-      className="relative inline-flex h-32 w-32 items-center justify-center rounded-full border border-orange-200/40 bg-gradient-to-br from-amber-500/75 to-orange-700/75 text-center text-xs uppercase tracking-[0.26em] text-orange-50 shadow-ember transition-transform duration-700 ease-cinematic hover:scale-105"
+      className="relative inline-flex h-24 w-24 items-center justify-center rounded-full border border-orange-200/40 bg-gradient-to-br from-amber-500/75 to-orange-700/75 text-center text-[10px] uppercase tracking-[0.18em] text-orange-50 shadow-ember transition-transform duration-700 ease-cinematic hover:scale-105 sm:h-32 sm:w-32 sm:text-xs sm:tracking-[0.26em]"
     >
-      <span className="max-w-[6rem] leading-relaxed">Book a Table</span>
+      <span className="max-w-[4.5rem] leading-relaxed sm:max-w-[6rem]">Book a Table</span>
       <span className="absolute inset-2 rounded-full border border-orange-100/35" />
     </motion.a>
   );
@@ -52,11 +52,11 @@ function StorySection() {
   const textY = useTransform(scrollYProgress, [0, 1], [20, -20]);
 
   return (
-    <section ref={ref} id="story" className="mx-auto max-w-7xl px-6 py-24 sm:px-8">
+    <section ref={ref} id="story" className="mx-auto max-w-7xl px-4 py-16 sm:px-8 sm:py-24">
       <div className="mb-12 flex flex-wrap items-end justify-between gap-6">
         <div>
-          <p className="font-[var(--font-accent)] text-sm uppercase tracking-[0.32em] text-orange-200/80">The Story</p>
-          <h2 className="mt-3 text-4xl text-stone-50 sm:text-5xl">Built from provenance. Finished in flame.</h2>
+          <p className="font-[var(--font-accent)] text-sm uppercase tracking-[0.2em] text-orange-200/80 sm:tracking-[0.32em]">The Story</p>
+          <h2 className="mt-3 text-3xl text-stone-50 sm:text-5xl">Built from provenance. Finished in flame.</h2>
         </div>
         <p className="max-w-lg text-sm leading-relaxed text-stone-300/85">
           Head Chef Elias Marrow sources from regenerative farms within 90 miles, then layers each plate with open-fire
@@ -64,10 +64,10 @@ function StorySection() {
         </p>
       </div>
 
-      <div className="grid items-start gap-8 lg:grid-cols-[1.2fr_0.8fr]">
+      <div className="grid items-start gap-6 lg:grid-cols-[1.2fr_0.8fr]">
         <motion.div style={{ y: imageY }} className="space-y-8">
           <motion.figure
-            className="relative h-[420px] overflow-hidden rounded-[1.8rem] border border-orange-200/30"
+            className="relative h-[300px] overflow-hidden rounded-[1.8rem] border border-orange-200/30 sm:h-[420px]"
             initial={{ clipPath: 'inset(0 100% 0 0)' }}
             whileInView={{ clipPath: 'inset(0 0% 0 0)' }}
             viewport={{ once: true, amount: 0.4 }}
@@ -84,7 +84,7 @@ function StorySection() {
           </motion.figure>
 
           <motion.figure
-            className="relative h-[280px] overflow-hidden rounded-[1.8rem] border border-orange-200/30"
+            className="relative h-[220px] overflow-hidden rounded-[1.8rem] border border-orange-200/30 sm:h-[280px]"
             initial={{ clipPath: 'inset(100% 0 0 0)' }}
             whileInView={{ clipPath: 'inset(0% 0 0 0)' }}
             viewport={{ once: true, amount: 0.4 }}
@@ -101,8 +101,8 @@ function StorySection() {
           </motion.figure>
         </motion.div>
 
-        <motion.div style={{ y: textY }} className="glass-charcoal rounded-[1.8rem] p-6 sm:p-8">
-          <h3 className="text-2xl text-stone-50">Ingredient Origin</h3>
+        <motion.div style={{ y: textY }} className="glass-charcoal rounded-[1.8rem] p-5 sm:p-8">
+          <h3 className="text-xl text-stone-50 sm:text-2xl">Ingredient Origin</h3>
           <ul className="mt-6 space-y-5 text-sm text-stone-200/85">
             <li>
               <p className="font-[var(--font-accent)] text-xs uppercase tracking-[0.22em] text-orange-200/80">Highland Ranch Cooperative</p>
@@ -141,11 +141,11 @@ function ReservationSection() {
   }, [date]);
 
   return (
-    <section id="reservations" className="mx-auto max-w-7xl px-6 py-24 sm:px-8">
+    <section id="reservations" className="mx-auto max-w-7xl px-4 py-16 sm:px-8 sm:py-24">
       <div className="mb-10 flex flex-wrap items-end justify-between gap-6">
         <div>
-          <p className="font-[var(--font-accent)] text-sm uppercase tracking-[0.32em] text-orange-200/80">Reservations</p>
-          <h2 className="mt-3 text-4xl text-stone-50 sm:text-5xl">Claim your seat by the fire.</h2>
+          <p className="font-[var(--font-accent)] text-sm uppercase tracking-[0.2em] text-orange-200/80 sm:tracking-[0.32em]">Reservations</p>
+          <h2 className="mt-3 text-3xl text-stone-50 sm:text-5xl">Claim your seat by the fire.</h2>
         </div>
         <p className="max-w-lg text-sm text-stone-300/85">
           Choose date, party size, and a service window. Confirmation prints instantly with your dining details.
@@ -225,7 +225,7 @@ function ReservationSection() {
                 transition={{ duration: 0.9, ease: EASE }}
               >
                 <p className="font-[var(--font-accent)] text-xs uppercase tracking-[0.28em] text-orange-200/80">Reservation Ticket</p>
-                <h3 className="mt-4 text-3xl text-orange-100">EMBER & OAK</h3>
+                <h3 className="mt-4 text-2xl text-orange-100 sm:text-3xl">EMBER & OAK</h3>
                 <div className="my-5 border-t border-dashed border-orange-100/30" />
                 <dl className="space-y-3 text-sm text-stone-200/85">
                   <div className="flex items-center justify-between gap-3">
@@ -267,11 +267,11 @@ function ReservationSection() {
 
 function CulturePreviewSection() {
   return (
-    <section className="mx-auto max-w-7xl px-6 py-24 sm:px-8">
+    <section className="mx-auto max-w-7xl px-4 py-16 sm:px-8 sm:py-24">
       <div className="mb-12 flex flex-wrap items-end justify-between gap-6">
         <div>
-          <p className="font-[var(--font-accent)] text-sm uppercase tracking-[0.32em] text-orange-200/80">Beyond the Plate</p>
-          <h2 className="mt-3 text-4xl text-stone-50 sm:text-5xl">Understand the food before you order it.</h2>
+          <p className="font-[var(--font-accent)] text-sm uppercase tracking-[0.2em] text-orange-200/80 sm:tracking-[0.32em]">Beyond the Plate</p>
+          <h2 className="mt-3 text-3xl text-stone-50 sm:text-5xl">Understand the food before you order it.</h2>
         </div>
         <p className="max-w-xl text-sm leading-relaxed text-stone-300/85">
           Explore dedicated pages that explain ingredients, technique, dining rhythm, and the cultural influences that
@@ -281,7 +281,7 @@ function CulturePreviewSection() {
 
       <div className="grid gap-5 lg:grid-cols-2">
         <article className="glass-charcoal overflow-hidden rounded-[1.8rem] border border-orange-200/30">
-          <div className="relative h-56">
+          <div className="relative h-48 sm:h-56">
             <Image
               src="https://images.unsplash.com/photo-1515003197210-e0cd71810b5f?auto=format&fit=crop&w=1600&q=80"
               alt="Chefs preparing dishes in an open kitchen"
@@ -293,7 +293,7 @@ function CulturePreviewSection() {
           </div>
           <div className="p-6">
             <p className="font-[var(--font-accent)] text-xs uppercase tracking-[0.26em] text-orange-200/80">Food Guide</p>
-            <h3 className="mt-2 text-2xl text-stone-50">How to read the menu and pair confidently</h3>
+            <h3 className="mt-2 text-xl text-stone-50 sm:text-2xl">How to read the menu and pair confidently</h3>
             <p className="mt-3 text-sm leading-relaxed text-stone-300/85">
               Learn flavor profiles, heat levels, dietary symbols, and pairing logic so ordering feels simple on any
               device.
@@ -308,7 +308,7 @@ function CulturePreviewSection() {
         </article>
 
         <article className="glass-charcoal overflow-hidden rounded-[1.8rem] border border-orange-200/30">
-          <div className="relative h-56">
+          <div className="relative h-48 sm:h-56">
             <Image
               src="https://images.unsplash.com/photo-1466978913421-dad2ebd01d17?auto=format&fit=crop&w=1600&q=80"
               alt="Shared dishes on a warm communal table"
@@ -320,7 +320,7 @@ function CulturePreviewSection() {
           </div>
           <div className="p-6">
             <p className="font-[var(--font-accent)] text-xs uppercase tracking-[0.26em] text-orange-200/80">Food Culture</p>
-            <h3 className="mt-2 text-2xl text-stone-50">The stories, rituals, and people behind the kitchen</h3>
+            <h3 className="mt-2 text-xl text-stone-50 sm:text-2xl">The stories, rituals, and people behind the kitchen</h3>
             <p className="mt-3 text-sm leading-relaxed text-stone-300/85">
               See how sourcing, seasonality, and service traditions come together to create the Ember & Oak dining
               culture.
@@ -379,7 +379,7 @@ export default function HomePage() {
       <div className="pointer-events-none fixed inset-0 z-[2] fire-gradient opacity-95" />
 
       <div className="relative z-10">
-        <section className="texture-noise relative flex min-h-screen items-end overflow-hidden px-6 pb-16 pt-32 sm:px-8">
+        <section className="texture-noise relative flex min-h-screen items-end overflow-hidden px-4 pb-14 pt-28 sm:px-8 sm:pt-32">
           <video
             autoPlay
             muted
@@ -392,10 +392,10 @@ export default function HomePage() {
 
           <div className="relative z-10 mx-auto grid w-full max-w-7xl gap-10 lg:grid-cols-[1fr_auto] lg:items-end">
             <div>
-              <p className="font-[var(--font-accent)] text-sm uppercase tracking-[0.35em] text-orange-200/85">Wood-Fired Kitchen</p>
-              <h1 className="mt-5 text-5xl leading-[0.95] text-stone-50 sm:text-7xl lg:text-8xl">
+              <p className="font-[var(--font-accent)] text-sm uppercase tracking-[0.2em] text-orange-200/85 sm:tracking-[0.35em]">Wood-Fired Kitchen</p>
+              <h1 className="mt-5 text-[2.35rem] leading-[0.95] text-stone-50 sm:text-7xl lg:text-8xl">
                 FIRE. FLAVOR.{' '}
-                <span className="inline-flex min-w-[7ch] text-orange-300">
+                <span className="inline-flex text-orange-300 sm:min-w-[7ch]">
                   [
                   <AnimatePresence mode="wait">
                     <motion.span
@@ -424,11 +424,11 @@ export default function HomePage() {
           </div>
         </section>
 
-        <section id="menu" className="mx-auto max-w-7xl px-6 py-24 sm:px-8">
+        <section id="menu" className="mx-auto max-w-7xl px-4 py-16 sm:px-8 sm:py-24">
           <div className="mb-12 flex flex-wrap items-end justify-between gap-6">
             <div>
-              <p className="font-[var(--font-accent)] text-sm uppercase tracking-[0.32em] text-orange-200/80">The Menu Experience</p>
-              <h2 className="mt-3 text-4xl text-stone-50 sm:text-5xl">A full-service menu system, built for clarity.</h2>
+              <p className="font-[var(--font-accent)] text-sm uppercase tracking-[0.2em] text-orange-200/80 sm:tracking-[0.32em]">The Menu Experience</p>
+              <h2 className="mt-3 text-3xl text-stone-50 sm:text-5xl">A full-service menu system, built for clarity.</h2>
             </div>
             <p className="max-w-lg text-sm leading-relaxed text-stone-300/85">
               Instead of compressing dishes into PDFs, this page turns your entire menu into a browsable live product:

@@ -62,14 +62,14 @@ const COMMUNITY_NIGHTS = [
 
 export default function CulturePage() {
   return (
-    <main className="relative overflow-x-clip bg-charcoal pb-24 pt-28 text-stone-100 sm:pt-32">
+    <main className="relative overflow-x-clip bg-charcoal pb-20 pt-24 text-stone-100 sm:pb-24 sm:pt-32">
       <div className="pointer-events-none fixed inset-0 z-[2] fire-gradient opacity-95" />
 
-      <div className="relative z-10 mx-auto max-w-7xl space-y-12 px-6 sm:px-8">
+      <div className="relative z-10 mx-auto max-w-7xl space-y-8 px-4 sm:space-y-12 sm:px-8">
         <section className="grid gap-6 lg:grid-cols-[1fr_0.95fr]">
-          <article className="glass-charcoal rounded-[1.8rem] border border-orange-200/25 p-6 sm:p-8">
-            <p className="font-[var(--font-accent)] text-sm uppercase tracking-[0.3em] text-orange-200/80">Food Culture</p>
-            <h1 className="mt-3 text-4xl text-stone-50 sm:text-6xl">A kitchen culture built on fire, place, and people.</h1>
+          <article className="glass-charcoal rounded-[1.8rem] border border-orange-200/25 p-5 sm:p-8">
+            <p className="font-[var(--font-accent)] text-sm uppercase tracking-[0.16em] text-orange-200/80 sm:tracking-[0.3em]">Food Culture</p>
+            <h1 className="mt-3 text-3xl text-stone-50 sm:text-6xl">A kitchen culture built on fire, place, and people.</h1>
             <p className="mt-5 text-sm leading-relaxed text-stone-300/90 sm:text-base">
               Ember & Oak treats culture as part of the menu. Every dish reflects sourcing relationships, regional
               influence, and service rituals that make the dining experience easier to understand for new guests.
@@ -114,13 +114,13 @@ export default function CulturePage() {
           ))}
         </section>
 
-        <section className="glass-charcoal rounded-[1.8rem] border border-orange-200/25 p-6 sm:p-8">
-          <p className="font-[var(--font-accent)] text-xs uppercase tracking-[0.24em] text-orange-200/80">Dining Rhythm</p>
-          <h2 className="mt-3 text-3xl text-stone-50">How a typical evening flows</h2>
+        <section className="glass-charcoal rounded-[1.8rem] border border-orange-200/25 p-5 sm:p-8">
+          <p className="font-[var(--font-accent)] text-xs uppercase tracking-[0.14em] text-orange-200/80 sm:tracking-[0.24em]">Dining Rhythm</p>
+          <h2 className="mt-3 text-2xl text-stone-50 sm:text-3xl">How a typical evening flows</h2>
           <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {DINING_FLOW.map((item) => (
               <article key={item.step} className="rounded-2xl border border-stone-100/15 bg-stone-950/45 p-4">
-                <p className="font-[var(--font-accent)] text-xs uppercase tracking-[0.22em] text-orange-200/80">Step {item.step}</p>
+                <p className="font-[var(--font-accent)] text-xs uppercase tracking-[0.14em] text-orange-200/80 sm:tracking-[0.22em]">Step {item.step}</p>
                 <h3 className="mt-2 text-lg text-stone-50">{item.title}</h3>
                 <p className="mt-2 text-sm text-stone-300/90">{item.detail}</p>
               </article>
@@ -129,9 +129,9 @@ export default function CulturePage() {
         </section>
 
         <section className="grid gap-5 lg:grid-cols-[1.05fr_0.95fr]">
-          <article className="glass-charcoal rounded-[1.8rem] border border-orange-200/25 p-6 sm:p-8">
-            <p className="font-[var(--font-accent)] text-xs uppercase tracking-[0.24em] text-orange-200/80">Community Events</p>
-            <h2 className="mt-3 text-3xl text-stone-50">Culture nights guests can join</h2>
+          <article className="glass-charcoal rounded-[1.8rem] border border-orange-200/25 p-5 sm:p-8">
+            <p className="font-[var(--font-accent)] text-xs uppercase tracking-[0.14em] text-orange-200/80 sm:tracking-[0.24em]">Community Events</p>
+            <h2 className="mt-3 text-2xl text-stone-50 sm:text-3xl">Culture nights guests can join</h2>
             <ul className="mt-5 space-y-3">
               {COMMUNITY_NIGHTS.map((night) => (
                 <li key={night.title} className="rounded-2xl border border-stone-100/15 bg-stone-950/45 p-4">

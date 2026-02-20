@@ -22,6 +22,8 @@ type MenuItem = {
 };
 
 const EASE = [0.76, 0, 0.24, 1] as [number, number, number, number];
+const FALLBACK_MENU_IMAGE =
+  'https://images.pexels.com/photos/262978/pexels-photo-262978.jpeg?auto=compress&cs=tinysrgb&w=1400&q=80';
 
 const CATEGORIES: Array<{ id: MenuCategory; label: string; subtitle: string }> = [
   { id: 'earth', label: 'From the Earth', subtitle: 'Seasonal produce and smoke-kissed botanicals' },
@@ -518,6 +520,42 @@ function dietaryLabel(flag: 'veg' | 'vegan' | 'gf' | 'signature') {
   return 'Signature';
 }
 
+function DishImage({
+  src,
+  alt,
+  sizes,
+  className,
+  priority = false
+}: {
+  src: string;
+  alt: string;
+  sizes: string;
+  className: string;
+  priority?: boolean;
+}) {
+  const [currentSrc, setCurrentSrc] = useState(src);
+
+  useEffect(() => {
+    setCurrentSrc(src);
+  }, [src]);
+
+  return (
+    <Image
+      src={currentSrc}
+      alt={alt}
+      fill
+      className={className}
+      sizes={sizes}
+      priority={priority}
+      onError={() => {
+        if (currentSrc !== FALLBACK_MENU_IMAGE) {
+          setCurrentSrc(FALLBACK_MENU_IMAGE);
+        }
+      }}
+    />
+  );
+}
+
 export default function MenuSection() {
   const [activeCategory, setActiveCategory] = useState<MenuCategory>('fire');
   const [dietary, setDietary] = useState<DietaryFilter>('all');
@@ -567,13 +605,16 @@ export default function MenuSection() {
   const activeCategoryMeta = CATEGORIES.find((category) => category.id === activeCategory);
 
   return (
-    <section id="menu-atlas" className="texture-noise relative mt-10 rounded-[2rem] border border-orange-300/30 p-5 sm:p-8">
+    <section
+      id="menu-atlas"
+      className="texture-noise relative mt-10 overflow-hidden rounded-[2rem] border border-orange-300/30 p-4 sm:p-8"
+    >
       <div className="absolute inset-0 rounded-[2rem] bg-gradient-to-br from-orange-500/8 via-transparent to-amber-400/6" />
-      <div className="relative z-10">
+      <div className="relative z-10 min-w-0">
         <div className="mb-8 flex flex-wrap items-end justify-between gap-5">
           <div>
-            <p className="font-[var(--font-accent)] text-sm uppercase tracking-[0.35em] text-orange-200/80">Live Menu Atlas</p>
-            <h3 className="mt-2 text-3xl text-stone-50 sm:text-4xl">Every dish visible. No PDFs. No hidden pages.</h3>
+            <p className="font-[var(--font-accent)] text-sm uppercase tracking-[0.2em] text-orange-200/80 sm:tracking-[0.35em]">Live Menu Atlas</p>
+            <h3 className="mt-2 text-2xl text-stone-50 sm:text-4xl">Every dish visible. No PDFs. No hidden pages.</h3>
           </div>
           <p className="max-w-xl text-sm leading-relaxed text-stone-300/85">
             Guests can search, filter dietary needs, and open any plate for ingredients, allergens, and pairing.
@@ -581,7 +622,7 @@ export default function MenuSection() {
           </p>
         </div>
 
-        <div className="grid gap-4 lg:grid-cols-[0.34fr_1fr]">
+        <div className="grid min-w-0 gap-4 lg:grid-cols-[0.34fr_1fr]">
           <aside className="hidden glass-charcoal rounded-3xl p-4 sm:p-5 lg:block">
             <p className="font-[var(--font-accent)] text-xs uppercase tracking-[0.28em] text-orange-100/80">Menu Chapters</p>
             <div className="mt-3 space-y-2">
@@ -606,13 +647,13 @@ export default function MenuSection() {
             </div>
           </aside>
 
-          <div className="space-y-5">
+          <div className="min-w-0 space-y-5">
             <div className="glass-charcoal rounded-3xl p-4 lg:hidden">
               <div className="flex items-center justify-between gap-3">
-                <p className="font-[var(--font-accent)] text-xs uppercase tracking-[0.24em] text-orange-100/80">Menu Chapters</p>
-                <p className="text-[11px] uppercase tracking-[0.16em] text-stone-400">Swipe</p>
+                <p className="font-[var(--font-accent)] text-xs uppercase tracking-[0.14em] text-orange-100/80">Menu Chapters</p>
+                <p className="text-[11px] uppercase tracking-[0.16em] text-stone-400">Pick</p>
               </div>
-              <div className="mt-3 flex gap-2 overflow-x-auto pb-1">
+              <div className="mt-3 grid grid-cols-2 gap-2">
                 {CATEGORIES.map((category) => {
                   const active = category.id === activeCategory;
                   return (
@@ -620,13 +661,13 @@ export default function MenuSection() {
                       key={`mobile-${category.id}`}
                       type="button"
                       onClick={() => setActiveCategory(category.id)}
-                      className={`shrink-0 rounded-xl border px-3 py-2 text-left transition-all duration-700 ease-cinematic ${
+                      className={`min-w-0 rounded-xl border px-3 py-2 text-left transition-all duration-700 ease-cinematic ${
                         active
                           ? 'border-orange-300/70 bg-gradient-to-r from-orange-500/30 to-amber-400/25 text-amber-50'
                           : 'border-stone-100/15 bg-stone-900/35 text-stone-300'
                       }`}
                     >
-                      <p className="text-[11px] uppercase tracking-[0.16em]">{category.label}</p>
+                      <p className="truncate text-[11px] uppercase tracking-[0.08em]">{category.label}</p>
                       <p className="mt-1 text-[10px] text-stone-300/80">{categoryCount[category.id]} dishes</p>
                     </button>
                   );
@@ -636,13 +677,13 @@ export default function MenuSection() {
 
             <div className="glass-charcoal rounded-3xl p-4 sm:p-5">
               <div className="flex flex-wrap items-start justify-between gap-4">
-                <div>
-                  <p className="font-[var(--font-accent)] text-xs uppercase tracking-[0.3em] text-orange-200/75">Now Serving</p>
+                <div className="min-w-0 flex-1">
+                  <p className="font-[var(--font-accent)] text-xs uppercase tracking-[0.14em] text-orange-200/75 sm:tracking-[0.3em]">Now Serving</p>
                   <h4 className="mt-1 text-2xl text-stone-50">{activeCategoryMeta?.label}</h4>
-                  <p className="mt-1 text-sm text-stone-300/80">{activeCategoryMeta?.subtitle}</p>
+                  <p className="mt-1 text-sm text-stone-300/80 break-words">{activeCategoryMeta?.subtitle}</p>
                 </div>
 
-                <div className="w-full max-w-xs">
+                <div className="w-full md:max-w-xs">
                   <label className="sr-only" htmlFor="menu-search">
                     Search menu
                   </label>
@@ -657,7 +698,7 @@ export default function MenuSection() {
                 </div>
               </div>
 
-              <div className="mt-4 flex flex-wrap gap-2">
+              <div className="mt-4 flex flex-wrap gap-1.5 sm:gap-2">
                 {DIETARY_FILTERS.map((filter) => {
                   const active = dietary === filter.id;
                   return (
@@ -665,7 +706,7 @@ export default function MenuSection() {
                       key={filter.id}
                       type="button"
                       onClick={() => setDietary(filter.id)}
-                      className={`rounded-full border px-3 py-1 text-xs uppercase tracking-[0.16em] transition-all duration-700 ease-cinematic ${
+                      className={`rounded-full border px-2.5 py-1 text-[11px] uppercase tracking-[0.1em] transition-all duration-700 ease-cinematic sm:px-3 sm:text-xs sm:tracking-[0.16em] ${
                         active
                           ? 'border-orange-300/70 bg-orange-500/25 text-amber-100'
                           : 'border-stone-100/15 bg-stone-900/35 text-stone-300 hover:border-orange-300/45 hover:text-amber-100'
@@ -679,7 +720,7 @@ export default function MenuSection() {
             </div>
 
             {filteredItems.length ? (
-              <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+              <div className="grid min-w-0 gap-4 sm:grid-cols-2 xl:grid-cols-3">
                 {filteredItems.map((item) => (
                   <motion.button
                     key={item.id}
@@ -691,15 +732,20 @@ export default function MenuSection() {
                     transition={{ duration: 0.8, ease: EASE }}
                   >
                     <motion.div layoutId={`plate-image-${item.id}`} className="relative h-44 w-full overflow-hidden">
-                      <Image src={item.image} alt={item.name} fill className="object-cover transition-transform duration-700 group-hover:scale-105" sizes="(max-width: 640px) 100vw, (max-width: 1280px) 50vw, 33vw" />
+                      <DishImage
+                        src={item.image}
+                        alt={item.name}
+                        className="object-cover transition-transform duration-700 group-hover:scale-105"
+                        sizes="(max-width: 640px) 100vw, (max-width: 1280px) 50vw, 33vw"
+                      />
                       <div className="absolute inset-0 bg-gradient-to-t from-stone-950 via-stone-950/20 to-transparent" />
                       <span className="absolute left-3 top-3 rounded-full border border-orange-200/45 bg-stone-900/70 px-2 py-1 text-[10px] uppercase tracking-[0.14em] text-orange-100">
                         {item.heat} Heat
                       </span>
                     </motion.div>
-                    <div className="p-4">
-                      <div className="flex items-start justify-between gap-3">
-                        <h5 className="text-xl leading-tight text-stone-50">{item.name}</h5>
+                    <div className="min-w-0 p-4">
+                      <div className="flex min-w-0 items-start justify-between gap-3">
+                        <h5 className="min-w-0 text-xl leading-tight text-stone-50 break-words">{item.name}</h5>
                         <span className="font-[var(--font-accent)] text-lg tracking-[0.08em] text-orange-200">{item.price}</span>
                       </div>
                       <p className="mt-2 text-sm text-stone-300/85">{item.description}</p>
@@ -735,7 +781,7 @@ export default function MenuSection() {
           >
             <motion.article
               layoutId={`plate-${activeItem.id}`}
-              className="menu-detail-modal relative max-h-[92vh] w-full max-w-4xl overflow-hidden rounded-t-[1.7rem] md:rounded-3xl"
+              className="menu-detail-modal relative h-[100dvh] max-h-[100dvh] w-full overflow-hidden rounded-none md:h-auto md:max-h-[92vh] md:max-w-4xl md:rounded-3xl"
               onClick={(event) => event.stopPropagation()}
               role="dialog"
               aria-modal="true"
@@ -749,27 +795,33 @@ export default function MenuSection() {
               </button>
 
               <div className="sticky top-0 z-20 flex items-center justify-between border-b border-stone-100/10 bg-stone-950/95 px-4 py-3 backdrop-blur md:hidden">
-                <p className="font-[var(--font-accent)] text-[11px] uppercase tracking-[0.22em] text-orange-200/80">Plate Detail</p>
+                <p className="font-[var(--font-accent)] text-[11px] uppercase tracking-[0.14em] text-orange-200/80">Plate Detail</p>
                 <button
                   type="button"
-                  className="rounded-full border border-orange-200/45 bg-orange-500/20 px-4 py-2 text-xs uppercase tracking-[0.18em] text-orange-100"
+                  className="rounded-full border border-orange-200/45 bg-orange-500/20 px-4 py-2 text-xs uppercase tracking-[0.12em] text-orange-100"
                   onClick={() => setActiveItem(null)}
                 >
                   Close
                 </button>
               </div>
 
-              <div className="max-h-[calc(92vh-3.5rem)] overflow-y-auto md:max-h-[92vh]">
+              <div className="h-[calc(100dvh-3.5rem)] overflow-y-auto md:h-auto md:max-h-[92vh]">
                 <div className="grid md:grid-cols-[1.05fr_1fr]">
                   <motion.div layoutId={`plate-image-${activeItem.id}`} className="relative min-h-[240px] md:min-h-[500px]">
-                    <Image src={activeItem.image} alt={activeItem.name} fill className="object-cover" sizes="(max-width: 768px) 100vw, 50vw" priority />
+                    <DishImage
+                      src={activeItem.image}
+                      alt={activeItem.name}
+                      className="object-cover"
+                      sizes="(max-width: 768px) 100vw, 50vw"
+                      priority
+                    />
                     <div className="absolute inset-0 bg-gradient-to-t from-stone-950/85 via-stone-950/30 to-transparent md:bg-gradient-to-r" />
                   </motion.div>
 
                   <div className="menu-detail-panel space-y-6 p-6 sm:p-8">
                     <div>
-                      <p className="font-[var(--font-accent)] text-xs uppercase tracking-[0.3em] text-orange-200/80">Plate Detail</p>
-                      <h4 className="mt-2 text-3xl text-stone-50">{activeItem.name}</h4>
+                      <p className="font-[var(--font-accent)] text-xs uppercase tracking-[0.14em] text-orange-200/80 sm:tracking-[0.3em]">Plate Detail</p>
+                      <h4 className="mt-2 text-2xl text-stone-50 sm:text-3xl">{activeItem.name}</h4>
                       <p className="mt-2 text-sm text-stone-200/95">{activeItem.description}</p>
                     </div>
 
@@ -803,14 +855,6 @@ export default function MenuSection() {
                 </div>
               </div>
             </motion.article>
-
-            <button
-              type="button"
-              className="fixed bottom-4 right-4 z-[90] rounded-full border border-orange-200/50 bg-orange-500/25 px-4 py-2 text-xs uppercase tracking-[0.18em] text-orange-100 md:hidden"
-              onClick={() => setActiveItem(null)}
-            >
-              Close
-            </button>
           </motion.div>
         ) : null}
       </AnimatePresence>

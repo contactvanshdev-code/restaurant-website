@@ -45,6 +45,7 @@ body {
   color: var(--foreground);
   font-family: var(--font-body), sans-serif;
   text-rendering: optimizeLegibility;
+  overflow-x: hidden;
 }
 
 h1,
